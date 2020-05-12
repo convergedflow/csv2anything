@@ -21,7 +21,7 @@
     template: src=template.j2 dest=tmp/{{item.key}}.tmp
     loop: "{{ variables.list }}"
   #
-  # OPTIONAL: Assemble the rendered templates if a single output file
+  # OPTIONAL: Assemble the rendered templates in a single output file
   # NOTE: If item.key is numeric/prefixed with a number then Ansible will assemble the 
   # rendered templates in assending numeric order, useful for things like firewall rules
   - name: Assemble Rendered Templates
