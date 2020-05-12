@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - file: path=tmp state=absent
+  - file: path=tmp state=directory
+  - file: path=output state=absent
+  - file: path=output state=directory
+  #
+  # Read variables from CSV file and register a list of dictionaries
+  - name: Create Variables
+    read_csv:
+      path: variables.csv
+    register: variables
+  #- debug: var=variables
+  #
+  # Render the template with each dictionary of variables in the list
+  # NOTE: Replace item.key with whatever the unique identifier for each dictionary is 
+  - name: Render Template 
+    template: src=template.j2 dest=tmp/{{item.key}}.tmp
+    loop: "{{ variables.list }}"
+  #
+  # OPTIONAL: Assemble the rendered templates if a single output file
+  # NOTE: If item.key is numeric/prefixed with a number then Ansible will assemble the 
+  # rendered templates in assending numeric order
+  - name: Assemble Rendered Templates
+    assemble:
+     src: tmp
+     dest: output/output.txt
