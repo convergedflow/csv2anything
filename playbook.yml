@@ -23,7 +23,7 @@
   #
   # OPTIONAL: Assemble the rendered templates if a single output file
   # NOTE: If item.key is numeric/prefixed with a number then Ansible will assemble the 
-  # rendered templates in assending numeric order
+  # rendered templates in assending numeric order, useful for things like firewall rules
   - name: Assemble Rendered Templates
     assemble:
      src: tmp
